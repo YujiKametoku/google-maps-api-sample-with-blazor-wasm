@@ -1,0 +1,39 @@
+﻿@page "/"
+
+<div id="map"
+     style="width: 500px; height: 500px;">
+</div>
+
+<button @onclick="GetMapInfo">地図情報を取得</button>
+
+@if (googleMapInfo != null)
+{
+    <div>ズーム：@googleMapInfo.Zoom</div>
+    <div>緯度：@googleMapInfo.Lat</div>
+    <div>経度：@googleMapInfo.Lng</div>
+    <div>マーカー緯度：@googleMapInfo.MarkerLat</div>
+    <div>マーカー経度：@googleMapInfo.MarkerLng</div>
+}
+
+@code {
+    GoogleMapInfo googleMapInfo = new GoogleMapInfo()
+    {
+        Zoom = 17,
+        Lat = 34.7029629,
+        Lng = 135.4946241,
+        MarkerLat = 34.7029629,
+        MarkerLng = 135.4946241,
+    };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JSRuntime.InvokeVoidAsync("load", "map", googleMapInfo.Lat, googleMapInfo.Lng, googleMapInfo.Zoom, googleMapInfo.MarkerLat, googleMapInfo.MarkerLng);
+    }
+
+    private async Task GetMapInfo()
+    {
+        var mapInfoJson = await JSRuntime.InvokeAsync<object>("getMapInfo");
+
+        googleMapInfo = JsonSerializer.Deserialize<GoogleMapInfo>(mapInfoJson.ToString());
+    }
+}

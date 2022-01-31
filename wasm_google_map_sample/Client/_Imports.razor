@@ -1,0 +1,19 @@
+﻿@using System.Net.Http
+@using System.Net.Http.Json
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.WebAssembly.Http
+@using Microsoft.JSInterop
+@using wasm_google_map_sample.Client
+@using wasm_google_map_sample.Client.Shared
+
+@*Jsonのシリアル化と逆シリアル化に使用します。*@
+@using System.Text.Json;
+@using System.Text.Json.Serialization;
+
+@*Sharedのモデルを使用するために追加します。*@
+@using wasm_google_map_sample.Shared
+
+@*JavaScriptとやり取りするために下記を追加します。*@
+@inject IJSRuntime JSRuntime
